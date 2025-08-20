@@ -1,26 +1,27 @@
-export default function Page() {
+import { sanity } from '@/sanity/client'
+import { homeQuery } from '@/sanity/queries'
+import Image from 'next/image'
+
+export const revalidate = 0
+export const dynamic = 'force-dynamic'
+
+export default async function HomePage() {
+  const data = await sanity.fetch(homeQuery)
+
   return (
-    <main style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: '100vh',
-      margin: 0,
-      background: '#000',
-      color: '#fff',
-      padding: '2rem'
-    }}>
-      <h1 style={{ fontSize: '4rem', marginBottom: '1rem' }}>MyDrumz</h1>
-      <p style={{ fontSize: '1.5rem', marginBottom: '2rem' }}>
-        Consultora creativa multidisciplinaria
-      </p>
-      <ul style={{ listStyle: 'disc inside', fontSize: '1.2rem', lineHeight: 1.6 }}>
-        <li>Marketing Digital</li>
-        <li>Desarrollo Web</li>
-        <li>Diseño Visual</li>
-        <li>Producción Musical</li>
-      </ul>
+    <main className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-8">
+      {data?.heroImage?.url && (
+        <Image
+          src={data.heroImage.url}
+          alt={data.heroImage.alt || 'Hero'}
+          width={1600}
+          height={900}
+          className="mb-8 rounded-lg"
+          priority
+        />
+      )}
+      <h1 className="text-6xl font-bold mb-4">{data?.title ?? 'Mydrumz'}</h1>
+      <p className="text-xl text-gray-300 text-center max-w-2xl">{data?.subtitle}</p>
     </main>
-  );
+  )
 }
