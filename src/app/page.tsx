@@ -1,13 +1,11 @@
-import { sanity } from '@/sanity/client'
-import { homeQuery } from '@/sanity/queries'
+import { sanity } from '../sanity/client'
+import { homeQuery } from '../sanity/queries'
 import Image from 'next/image'
 
-export const revalidate = 0
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export default async function HomePage() {
   const data = await sanity.fetch(homeQuery)
-
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-8">
       {data?.heroImage?.url && (
@@ -25,4 +23,3 @@ export default async function HomePage() {
     </main>
   )
 }
-"// touch" 
