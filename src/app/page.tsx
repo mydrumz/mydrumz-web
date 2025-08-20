@@ -1,13 +1,18 @@
-import {sanity} from '../sanity/client'
-import {homeQuery, seoQuery} from '../sanity/queries'
+import { sanity } from '../sanity/client'
+import { homeQuery, seoQuery } from '../sanity/queries'
 import Image from 'next/image'
-import type {Metadata} from 'next'
+import type { Metadata } from 'next'
 import RichText from '../components/RichText'
 
 export const revalidate = 60
 
 export async function generateMetadata(): Promise<Metadata> {
-  const seo = await sanity.fetch(seoQuery, {}, {next: {revalidate: 60}})
+  const seo = await sanity.fetch(
+    seoQuery,
+    {},
+    { next: { revalidate: 60, tags: ['home'] } }
+  )
+
   return {
     title: seo?.metaTitle ?? 'mydrumz',
     description: seo?.metaDescription ?? 'Estudio creativo & marketing',
@@ -16,14 +21,18 @@ export async function generateMetadata(): Promise<Metadata> {
       description: seo?.metaDescription ?? 'Estudio creativo & marketing',
       url: 'https://www.mydrumz.com',
       siteName: 'mydrumz',
-      images: seo?.ogImage ? [{url: seo.ogImage}] : undefined,
+      images: seo?.ogImage ? [{ url: seo.ogImage }] : undefined,
     },
-    alternates: {canonical: 'https://www.mydrumz.com'},
+    alternates: { canonical: 'https://www.mydrumz.com' },
   }
 }
 
 export default async function HomePage() {
-  const data = await sanity.fetch(homeQuery, {}, {next: {revalidate: 60}})
+  const data = await sanity.fetch(
+    homeQuery,
+    {},
+    { next: { revalidate: 60, tags: ['home'] } }
+  )
 
   return (
     <main className="min-h-screen bg-black text-white p-8 flex flex-col items-center">

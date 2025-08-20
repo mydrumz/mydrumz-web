@@ -1,8 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://mydrumz.com',
+  siteUrl: 'https://www.mydrumz.com',
   generateRobotsTxt: true,
-  sitemapSize: 5000,
   changefreq: 'weekly',
-  priority: 1.0,
-};
+  priority: 0.7,
+}
